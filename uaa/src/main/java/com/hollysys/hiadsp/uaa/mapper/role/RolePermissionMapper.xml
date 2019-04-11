@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hollysys.hiadsp.uaa.mapper.role.RolePermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.hollysys.hiadsp.common.model.role.RolePermission" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="ROLE_CODE" property="roleCode" jdbcType="VARCHAR" />
+    <result column="PERM_CODE" property="permCode" jdbcType="VARCHAR" />
+    <result column="OPT_VIEW" property="optView" jdbcType="CHAR" />
+    <result column="OPT_PASS" property="optPass" jdbcType="CHAR" />
+    <result column="OPT_EDIT" property="optEdit" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, ROLE_CODE, PERM_CODE, OPT_VIEW, OPT_PASS, OPT_EDIT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from role_permission
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="seletRoleByPermUrl" parameterType="java.lang.String" resultType="java.lang.String" >
+    select  r.ename 
+    from role_permission rp left join role r on  rp.role_code = r.code 
+                                        left join  permission p on rp.perm_code  = p.code
+                                         where p.RES_URI = #{url}
+  </select>
+  <select id="selectByRoleAndType" resultMap="BaseResultMap" parameterType="java.lang.String" resultType="java.util.List" >
+    select 
+    a.CODE, a.ROLE_CODE, a.PERM_CODE, a.OPT_VIEW, a.OPT_PASS, a.OPT_EDIT
+    from role_permission a,permission b 
+    where a.PERM_CODE = b.CODE and a.ROLE_CODE = #{roleCode,jdbcType=VARCHAR} and b.RES_TYPE = #{permType,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByRole" resultMap="BaseResultMap" parameterType="java.lang.String" resultType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from role_permission
+    where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByPerm" resultMap="BaseResultMap" parameterType="java.lang.String" resultType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from role_permission
+    where PERM_CODE = #{permCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from role_permission
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByRoleCode" parameterType="java.lang.String" >
+    delete from role_permission
+    where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertBatch" parameterType="java.util.List">  
+  
+	 insert into 
+	 	role_permission (CODE, ROLE_CODE, PERM_CODE, 
+      OPT_VIEW, OPT_PASS, OPT_EDIT) 
+	 values 
+ 	<foreach collection="list" item="item" index="index" separator="," >  
+      (#{item.code,jdbcType=VARCHAR}, #{item.roleCode,jdbcType=VARCHAR}, #{item.permCode,jdbcType=VARCHAR}, 
+      #{item.optView,jdbcType=CHAR}, #{item.optPass,jdbcType=CHAR}, #{item.optEdit,jdbcType=CHAR})
+   	</foreach>
+   	</insert>  
+  <insert id="insert" parameterType="com.hollysys.hiadsp.common.model.role.RolePermission" >
+    insert into role_permission (CODE, ROLE_CODE, PERM_CODE, 
+      OPT_VIEW, OPT_PASS, OPT_EDIT)
+    values (#{code,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, #{permCode,jdbcType=VARCHAR}, 
+      #{optView,jdbcType=CHAR}, #{optPass,jdbcType=CHAR}, #{optEdit,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hollysys.hiadsp.common.model.role.RolePermission" >
+    insert into role_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="roleCode != null" >
+        ROLE_CODE,
+      </if>
+      <if test="permCode != null" >
+        PERM_CODE,
+      </if>
+      <if test="optView != null" >
+        OPT_VIEW,
+      </if>
+      <if test="optPass != null" >
+        OPT_PASS,
+      </if>
+      <if test="optEdit != null" >
+        OPT_EDIT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null" >
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="permCode != null" >
+        #{permCode,jdbcType=VARCHAR},
+      </if>
+      <if test="optView != null" >
+        #{optView,jdbcType=CHAR},
+      </if>
+      <if test="optPass != null" >
+        #{optPass,jdbcType=CHAR},
+      </if>
+      <if test="optEdit != null" >
+        #{optEdit,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hollysys.hiadsp.common.model.role.RolePermission" >
+    update role_permission
+    <set >
+      <if test="roleCode != null" >
+        ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="permCode != null" >
+        PERM_CODE = #{permCode,jdbcType=VARCHAR},
+      </if>
+      <if test="optView != null" >
+        OPT_VIEW = #{optView,jdbcType=CHAR},
+      </if>
+      <if test="optPass != null" >
+        OPT_PASS = #{optPass,jdbcType=CHAR},
+      </if>
+      <if test="optEdit != null" >
+        OPT_EDIT = #{optEdit,jdbcType=CHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hollysys.hiadsp.common.model.role.RolePermission" >
+    update role_permission
+    set ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+      PERM_CODE = #{permCode,jdbcType=VARCHAR},
+      OPT_VIEW = #{optView,jdbcType=CHAR},
+      OPT_PASS = #{optPass,jdbcType=CHAR},
+      OPT_EDIT = #{optEdit,jdbcType=CHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

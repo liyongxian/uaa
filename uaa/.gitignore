@@ -1,0 +1,17 @@
+
+# Eclipse #
+.project
+.classpath
+.springBeans
+.settings/
+
+.factorypath
+.apt_generated/
+
+
+# Maven #
+target/
+
+# logs file #
+log/
+

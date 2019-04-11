@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hollysys.hiadsp.uaa.mapper.permission.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.hollysys.hiadsp.common.model.permission.Permission" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ENAME" property="ename" jdbcType="VARCHAR" />
+    <result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+    <result column="RES_TYPE" property="resType" jdbcType="VARCHAR" />
+    <result column="RES_SUB_TYPE" property="resSubType" jdbcType="VARCHAR" />
+    <result column="RES_URI" property="resUri" jdbcType="VARCHAR" />
+    <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+    <result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
+    <result column="RESOURCE" property="resource" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="INTEGER" />
+    <result column="PERM_VALUE" property="permValue" jdbcType="VARCHAR" />
+    <result column="LEVEL" property="level" jdbcType="INTEGER" />
+    <result column="IS_LEAF" property="isLeaf" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATOR_NAME" property="creatorName" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATOR" property="updator" jdbcType="VARCHAR" />
+    <result column="UPDATOR_NAME" property="updatorName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, NAME,ENAME, APP_TYPE, RES_TYPE, RES_SUB_TYPE, RES_URI, PARENT_CODE, RESOURCE, STATE, 
+    ORDER_NO, PERM_VALUE, LEVEL, IS_LEAF, DESCRIPTION, CREATE_TIME, CREATOR, UPDATE_TIME, 
+    UPDATOR
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   select 
+   	P.CODE, P.NAME,P.ENAME, P.APP_TYPE, P.RES_TYPE, P.RES_SUB_TYPE, P.RES_URI, IFNULL(P.PARENT_CODE,'0') PARENT_CODE,IFNULL(P1.NAME,'ROOT') PARENT_NAME, P.RESOURCE, P.STATE, 
+    P.ORDER_NO, P.PERM_VALUE, P.LEVEL, P.IS_LEAF, P.DESCRIPTION, P.CREATE_TIME, P.CREATOR, P.UPDATE_TIME, 
+    P.UPDATOR
+    from permission p 
+    left outer join permission p1
+    on p.parent_code = p1.code
+    where p.CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from permission
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hollysys.hiadsp.common.model.permission.Permission" >
+    insert into permission (CODE, NAME,ENAME, APP_TYPE, 
+      RES_TYPE, RES_SUB_TYPE, RES_URI, 
+      PARENT_CODE, RESOURCE, STATE, 
+      ORDER_NO, PERM_VALUE, LEVEL, 
+      IS_LEAF, DESCRIPTION, CREATE_TIME, 
+      CREATOR, UPDATE_TIME, UPDATOR
+      )
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{ename,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, 
+      #{resType,jdbcType=VARCHAR}, #{resSubType,jdbcType=VARCHAR}, #{resUri,jdbcType=VARCHAR}, 
+      #{parentCode,jdbcType=VARCHAR}, #{resource,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{orderNo,jdbcType=INTEGER}, #{permValue,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, 
+      #{isLeaf,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updator,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hollysys.hiadsp.common.model.permission.Permission" >
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+       <if test="ename != null" >
+        ENAME,
+      </if>
+      <if test="appType != null" >
+        APP_TYPE,
+      </if>
+      <if test="resType != null" >
+        RES_TYPE,
+      </if>
+      <if test="resSubType != null" >
+        RES_SUB_TYPE,
+      </if>
+      <if test="resUri != null" >
+        RES_URI,
+      </if>
+      <if test="parentCode != null" >
+        PARENT_CODE,
+      </if>
+      <if test="resource != null" >
+        RESOURCE,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="permValue != null" >
+        PERM_VALUE,
+      </if>
+      <if test="level != null" >
+        LEVEL,
+      </if>
+      <if test="isLeaf != null" >
+        IS_LEAF,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updator != null" >
+        UPDATOR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+       <if test="ename != null" >
+        #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null" >
+        #{appType,jdbcType=VARCHAR},
+      </if>
+      <if test="resType != null" >
+        #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="resSubType != null" >
+        #{resSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="resUri != null" >
+        #{resUri,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resource != null" >
+        #{resource,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="permValue != null" >
+        #{permValue,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="isLeaf != null" >
+        #{isLeaf,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hollysys.hiadsp.common.model.permission.Permission" >
+    update permission
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ename != null" >
+        ENAME = #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null" >
+        APP_TYPE = #{appType,jdbcType=VARCHAR},
+      </if>
+      <if test="resType != null" >
+        RES_TYPE = #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="resSubType != null" >
+        RES_SUB_TYPE = #{resSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="resUri != null" >
+        RES_URI = #{resUri,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resource != null" >
+        RESOURCE = #{resource,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="permValue != null" >
+        PERM_VALUE = #{permValue,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        LEVEL = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="isLeaf != null" >
+        IS_LEAF = #{isLeaf,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        UPDATOR = #{updator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hollysys.hiadsp.common.model.permission.Permission" >
+    update permission
+    set NAME = #{name,jdbcType=VARCHAR},
+      ENAME = #{ename,jdbcType=VARCHAR},
+      APP_TYPE = #{appType,jdbcType=VARCHAR},
+      RES_TYPE = #{resType,jdbcType=VARCHAR},
+      RES_SUB_TYPE = #{resSubType,jdbcType=VARCHAR},
+      RES_URI = #{resUri,jdbcType=VARCHAR},
+      PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      RESOURCE = #{resource,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      PERM_VALUE = #{permValue,jdbcType=VARCHAR},
+      LEVEL = #{level,jdbcType=INTEGER},
+      IS_LEAF = #{isLeaf,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATOR = #{updator,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <select id="getAllPermission" resultMap="BaseResultMap" resultType="java.util.List">
+    select 
+   	P.CODE, P.NAME,P.ENAME, P.APP_TYPE, P.RES_TYPE, P.RES_SUB_TYPE, P.RES_URI, P.PARENT_CODE,IFNULL(P1.NAME,'ROOT') PARENT_NAME, P.RESOURCE, P.STATE, 
+    P.ORDER_NO, P.PERM_VALUE, P.LEVEL, P.IS_LEAF, P.DESCRIPTION, P.CREATE_TIME, P.CREATOR, P.UPDATE_TIME, 
+    P.UPDATOR
+    from permission p 
+    left outer join permission p1
+    on p.parent_code = p1.code
+    order by P.order_no
+  </select>
+  <select id="getPermissionList" resultMap="BaseResultMap" resultType="java.util.List">
+    select 
+    P.CODE, P.NAME,P.ENAME, P.APP_TYPE, P.RES_TYPE, P.RES_SUB_TYPE, P.RES_URI, P.PARENT_CODE,IFNULL(P1.NAME,'ROOT') PARENT_NAME, P.RESOURCE, P.STATE, 
+    P.ORDER_NO, P.PERM_VALUE, P.LEVEL, P.IS_LEAF, P.DESCRIPTION, P.CREATE_TIME, P.CREATOR, P.UPDATE_TIME, 
+    P.UPDATOR
+    from permission P
+    LEFT OUTER JOIN permission P1 ON p.parent_code = p1.code
+    where 1=1
+    <if test='appType != null and appType !=""'>
+        and P.app_type=#{appType}
+    </if>
+    <if test='resType != null and resType !=""'>
+        and P.res_type=#{resType}
+    </if>
+    <if test='resSubType != null and resSubType !=""'>
+        and P.res_sub_type=#{resSubType}
+    </if>
+    order by P.order_no
+  </select>
+  <select id="getChildren" resultMap="BaseResultMap" resultType="java.util.List">
+      select 
+    <include refid="Base_Column_List" />
+    from permission
+    where parent_code =#{parentCode}
+    order by order_no
+  </select>
+  <select id="getPermissionsByRoleCode" resultMap="BaseResultMap" resultType="java.util.List">
+    select 
+    p.code, 
+    p.name, 
+    p.ename,
+    p.app_type, 
+    p.res_type, 
+    p.res_sub_type, 
+    p.res_uri, 
+    p.parent_code, 
+    p.resource, 
+    p.state, 
+    p.order_no, 
+    p.perm_value, 
+    p.level, 
+    p.is_leaf, 
+    p.description, 
+    p.create_time, 
+    p.creator, 
+    p.update_time, 
+    p.updator
+    from role_permission rp,permission p
+    where p.code = rp.perm_code and p.state='1'
+    and rp.role_code =#{roleCode}
+    <if test='appType != null and appType !=""'>
+        and p.app_type=#{appType}
+    </if>
+    <if test='resType != null and resType !=""'>
+        and p.res_type=#{resType}
+    </if>
+    order by p.order_no
+  </select>
+  <select id="getPermissionsByRoleCodeList" resultMap="BaseResultMap" resultType="java.util.List">
+    select 
+    p.code, 
+    p.name, 
+    p.ename,
+    p.app_type, 
+    p.res_type, 
+    p.res_sub_type, 
+    p.res_uri, 
+    p.parent_code, 
+    p.resource, 
+    p.state, 
+    p.order_no, 
+    p.perm_value, 
+    p.level, 
+    p.is_leaf, 
+    p.description, 
+    p.create_time, 
+    p.creator, 
+    p.update_time, 
+    p.updator
+    from role_permission rp,permission p
+    where p.code = rp.perm_code and p.state='1'
+    and rp.role_code in
+    <foreach collection="roleCodeList" index="index" item="item" separator="," open="(" close=")">
+       #{item} 
+    </foreach>
+   <if test='appType != null and appType !=""'>
+        and p.app_type=#{appType}
+    </if>
+    <if test='resType != null and resType !=""'>
+        and p.res_type=#{resType}
+    </if>
+    order by p.order_no
+  </select>
+  <update id="updateLeafState">
+      update permission set is_leaf=#{isLeaf} where code=#{code}
+  </update>
+</mapper>

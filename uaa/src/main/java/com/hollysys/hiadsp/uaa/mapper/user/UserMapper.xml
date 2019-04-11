@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hollysys.hiadsp.uaa.mapper.user.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.hollysys.hiadsp.common.model.user.User" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="LOGINNAME" property="loginname" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+    <result column="CITY" property="city" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="CHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="INTRODUCTION" property="introduction" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="GRAPHICURL" property="graphicurl" jdbcType="VARCHAR" />
+    <result column="REGTIME" property="regtime" jdbcType="TIMESTAMP" />
+    <result column="REGSOURCE" property="regsource" jdbcType="CHAR" />
+    <result column="REGIP" property="regip" jdbcType="VARCHAR" />
+    <result column="REGADDRESS" property="regaddress" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="DELSTATUS" property="delstatus" jdbcType="CHAR" />
+    <result column="LOGINTIME" property="logintime" jdbcType="TIMESTAMP" />
+    <result column="UPDATEUSER" property="updateuser" jdbcType="VARCHAR" />
+    <result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="TOKEN" property="token" jdbcType="VARCHAR" />
+    <result column="TOKENEXPTIME" property="tokenexptime" jdbcType="VARCHAR" />
+    <result column="HOBBY" property="hobby" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, NAME, LOGINNAME, PASSWORD, ADDRESS, PROVINCE, CITY, SEX, BIRTHDAY, MOBILE, 
+    INTRODUCTION, EMAIL, GRAPHICURL, REGTIME, REGSOURCE, REGIP, REGADDRESS, STATUS, DELSTATUS, 
+    LOGINTIME, UPDATEUSER, UPDATETIME, CREATOR, CREATETIME, TOKEN, TOKENEXPTIME,HOBBY
+  </sql>
+ 
+   <select id="selectByUserCodeList" resultMap="BaseResultMap" parameterType="java.util.List" resultType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_userinfo
+    where CODE in
+    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+       #{item}
+    </foreach>
+  </select>
+  <delete id="delUser" parameterType="java.lang.String" >
+    delete from user_userinfo
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hollysys.hiadsp.common.model.user.User" >
+    insert into user_userinfo (CODE, NAME, LOGINNAME, 
+      PASSWORD, ADDRESS, PROVINCE, 
+      CITY, SEX, BIRTHDAY, MOBILE, 
+      INTRODUCTION, EMAIL, GRAPHICURL, 
+      REGTIME, REGSOURCE, REGIP, 
+      REGADDRESS, STATUS, DELSTATUS, 
+      LOGINTIME, UPDATEUSER, UPDATETIME, 
+      CREATOR, CREATETIME, TOKEN, 
+      TOKENEXPTIME,HOBBY)
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{birthday,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{graphicurl,jdbcType=VARCHAR}, 
+      #{regtime,jdbcType=TIMESTAMP}, #{regsource,jdbcType=CHAR}, #{regip,jdbcType=VARCHAR}, 
+      #{regaddress,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{delstatus,jdbcType=CHAR}, 
+      #{logintime,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{token,jdbcType=VARCHAR}, 
+      #{tokenexptime,jdbcType=VARCHAR},#{hobby})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hollysys.hiadsp.common.model.user.User" >
+    insert into user_userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="loginname != null" >
+        LOGINNAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="province != null" >
+        PROVINCE,
+      </if>
+      <if test="city != null" >
+        CITY,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="introduction != null" >
+        INTRODUCTION,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="graphicurl != null" >
+        GRAPHICURL,
+      </if>
+      <if test="regtime != null" >
+        REGTIME,
+      </if>
+      <if test="regsource != null" >
+        REGSOURCE,
+      </if>
+      <if test="regip != null" >
+        REGIP,
+      </if>
+      <if test="regaddress != null" >
+        REGADDRESS,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="delstatus != null" >
+        DELSTATUS,
+      </if>
+      <if test="logintime != null" >
+        LOGINTIME,
+      </if>
+      <if test="updateuser != null" >
+        UPDATEUSER,
+      </if>
+      <if test="updatetime != null" >
+        UPDATETIME,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="token != null" >
+        TOKEN,
+      </if>
+      <if test="tokenexptime != null" >
+        TOKENEXPTIME,
+      </if>
+      <if test="hobby != null" >
+        HOBBY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicurl != null" >
+        #{graphicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null" >
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regsource != null" >
+        #{regsource,jdbcType=CHAR},
+      </if>
+      <if test="regip != null" >
+        #{regip,jdbcType=VARCHAR},
+      </if>
+      <if test="regaddress != null" >
+        #{regaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="delstatus != null" >
+        #{delstatus,jdbcType=CHAR},
+      </if>
+      <if test="logintime != null" >
+        #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuser != null" >
+        #{updateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenexptime != null" >
+        #{tokenexptime,jdbcType=VARCHAR},
+         </if>
+        <if test="hobby != null" >
+        #{hobby,jdbcType=VARCHAR},
+     
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hollysys.hiadsp.common.model.user.User" >
+    update user_userinfo
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        LOGINNAME = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        PROVINCE = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        CITY = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        INTRODUCTION = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicurl != null" >
+        GRAPHICURL = #{graphicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null" >
+        REGTIME = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regsource != null" >
+        REGSOURCE = #{regsource,jdbcType=CHAR},
+      </if>
+      <if test="regip != null" >
+        REGIP = #{regip,jdbcType=VARCHAR},
+      </if>
+      <if test="regaddress != null" >
+        REGADDRESS = #{regaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="delstatus != null" >
+        DELSTATUS = #{delstatus,jdbcType=CHAR},
+      </if>
+      <if test="logintime != null" >
+        LOGINTIME = #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuser != null" >
+        UPDATEUSER = #{updateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="token != null" >
+        TOKEN = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenexptime != null" >
+        TOKENEXPTIME = #{tokenexptime,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null" >
+        HOBBY = #{hobby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hollysys.hiadsp.common.model.user.User" >
+    update user_userinfo
+    set NAME = #{name,jdbcType=VARCHAR},
+      LOGINNAME = #{loginname,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      PROVINCE = #{province,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=CHAR},
+      BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      INTRODUCTION = #{introduction,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      GRAPHICURL = #{graphicurl,jdbcType=VARCHAR},
+      REGTIME = #{regtime,jdbcType=TIMESTAMP},
+      REGSOURCE = #{regsource,jdbcType=CHAR},
+      REGIP = #{regip,jdbcType=VARCHAR},
+      REGADDRESS = #{regaddress,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      DELSTATUS = #{delstatus,jdbcType=CHAR},
+      LOGINTIME = #{logintime,jdbcType=TIMESTAMP},
+      UPDATEUSER = #{updateuser,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      TOKEN = #{token,jdbcType=VARCHAR},
+      TOKENEXPTIME = #{tokenexptime,jdbcType=VARCHAR},
+      HOBBY = #{hobby,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <select id="get" parameterType="string" resultType="com.hollysys.hiadsp.common.model.user.User">
+	  	<![CDATA[ 
+		  SELECT CODE, 
+				NAME, 
+				LOGINNAME, 
+				PASSWORD, 
+				SEX, 
+				ADDRESS, 
+				PROVINCE,
+				CITY,
+				BIRTHDAY,
+				MOBILE,
+				EMAIL,
+				GRAPHICURL,
+				REGTIME,
+				REGSOURCE,
+				REGIP,
+				REGADDRESS,
+				STATUS,
+				DELSTATUS,
+				LOGINTIME,
+				UPDATEUSER,
+				UPDATETIME,
+				CREATOR,
+				CREATETIME,
+				TOKEN,
+				TOKENEXPTIME,
+				HOBBY
+				
+			FROM user_userInfo
+			WHERE CODE=#{code}  
+		]]>
+	</select>
+  <select id="getUserByLoginName" parameterType="string"
+		resultType="com.hollysys.hiadsp.common.model.user.User">
+	  	<![CDATA[ 
+		  SELECT CODE, 
+				NAME, 
+				LOGINNAME, 
+				PASSWORD, 
+				SEX, 
+				ADDRESS, 
+				PROVINCE,
+				CITY,
+				BIRTHDAY,
+				MOBILE,
+				EMAIL,
+				GRAPHICURL,
+				REGTIME,
+				REGSOURCE,
+				REGIP,
+				REGADDRESS,
+				STATUS,
+				DELSTATUS,
+				LOGINTIME,
+				UPDATEUSER,
+				UPDATETIME,
+				CREATOR,
+				CREATETIME,
+				TOKEN,
+				TOKENEXPTIME,
+				HOBBY
+				
+			FROM user_userInfo
+			WHERE LOGINNAME=#{loginName}  
+		]]>
+	</select>
+	<select id="getUserByMobile" parameterType="string"
+		resultType="com.hollysys.hiadsp.common.model.user.User">
+	  	<![CDATA[ 
+		  SELECT CODE, 
+				NAME, 
+				LOGINNAME, 
+				PASSWORD, 
+				SEX, 
+				ADDRESS, 
+				PROVINCE,
+				CITY,
+				BIRTHDAY,
+				MOBILE,
+				EMAIL,
+				GRAPHICURL,
+				REGTIME,
+				REGSOURCE,
+				REGIP,
+				REGADDRESS,
+				STATUS,
+				DELSTATUS,
+				LOGINTIME,
+				UPDATEUSER,
+				UPDATETIME,
+				CREATOR,
+				CREATETIME,
+				TOKEN,
+				TOKENEXPTIME,
+				HOBBY
+			FROM user_userInfo
+			WHERE MOBILE=#{mobile}  
+		]]>
+	</select>
+
+	<select id="getUserByEmail" parameterType="string"
+		resultType="com.hollysys.hiadsp.common.model.user.User">
+	  	<![CDATA[ 
+		   SELECT CODE, 
+				NAME, 
+				LOGINNAME, 
+				PASSWORD, 
+				SEX, 
+				ADDRESS, 
+				PROVINCE,
+				CITY,
+				BIRTHDAY,
+				MOBILE,
+				EMAIL,
+				GRAPHICURL,
+				REGTIME,
+				REGSOURCE,
+				REGIP,
+				REGADDRESS,
+				STATUS,
+				DELSTATUS,
+				LOGINTIME,
+				UPDATEUSER,
+				UPDATETIME,
+				CREATOR,
+				CREATETIME,
+				TOKEN,
+				TOKENEXPTIME,
+				HOBBY
+			FROM user_userInfo
+			WHERE EMAIL=#{email}  
+		]]>
+	</select>
+	<select id="checkUserExits" parameterType="com.hollysys.hiadsp.common.model.user.User"
+		resultType="int">
+	 	<![CDATA[  
+	  	   select count(CODE) from user_userInfo where loginName=#{loginName}   
+		]]>
+	</select>
+
+	<select id="getPageUserList" resultType="java.util.List"
+		resultMap="BaseResultMap">
+		 SELECT CODE, 
+				NAME, 
+				LOGINNAME, 
+				PASSWORD, 
+				SEX, 
+				ADDRESS, 
+				PROVINCE,
+				CITY,
+				BIRTHDAY,
+				MOBILE,
+				EMAIL,
+				GRAPHICURL,
+				REGTIME,
+				REGSOURCE,
+				REGIP,
+				REGADDRESS,
+				STATUS,
+				DELSTATUS,
+				LOGINTIME,
+				UPDATEUSER,
+				UPDATETIME,
+				CREATOR,
+				CREATETIME,
+				TOKEN,
+				TOKENEXPTIME,
+				HOBBY
+		FROM
+		user_userInfo user where 1=1 AND user.DELSTATUS='0' 
+		<if test="param.start != null and param.start != ''">
+			AND user.REGTIME &gt;= #{param.start}
+		</if>
+		<if test="param.end != null and param.end != ''">
+			AND user.REGTIME &lt;= #{param.end}
+		</if>
+		<if test="param.name != null and param.name != ''">
+			and ((user.NAME like concat('%',#{param.name},'%')) OR
+			(user.MOBILE like concat('%',#{param.name},'%')) OR 
+			(user.EMAIL like concat('%',#{param.name},'%')) )
+		</if>
+		<if test="param.regSource != null and param.regSource != ''">
+			and REGSOURCE = #{param.regSource}
+		</if>
+		<if test="param.province != null and param.province != ''">
+			and PROVINCE = #{param.province}
+		</if>
+		<if test="param.status != null and param.status != ''">
+			and STATUS = #{param.status}
+		</if>
+		ORDER BY user.CODE DESC
+	</select>
+	<update id="updatePasswordByCode" parameterType="com.hollysys.hiadsp.common.model.user.User">
+	    <![CDATA[ 
+		 	UPDATE user_userInfo SET password=#{password} WHERE code=#{code}
+		 ]]>
+	</update>
+	<update id="updateGraphicUrl" parameterType="com.hollysys.hiadsp.common.model.user.User">
+	    <![CDATA[ 
+		 	UPDATE user_userInfo SET GRAPHICURL=#{graphicUrl} WHERE code=#{code}
+		 ]]>
+	</update>
+</mapper>
