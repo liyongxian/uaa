@@ -1,0 +1,4 @@
+1.启动时需要增加参数
+spring.profiles.active dev
+druid.filters mergeStat
+druid.useGlobalDataSourceStat true

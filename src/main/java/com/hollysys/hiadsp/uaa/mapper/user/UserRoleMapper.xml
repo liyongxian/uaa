@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hollysys.hiadsp.uaa.mapper.user.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.hollysys.hiadsp.common.model.user.UserRole" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="ROLE_CODE" property="roleCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, USER_CODE, ROLE_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_role
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+
+ <select id="selectByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String" resultType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_role
+    where USER_CODE= #{userCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByRoleCode" resultMap="BaseResultMap" parameterType="java.lang.String" resultType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_role
+    where ROLE_CODE= #{roleCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByRoleCodeList" resultMap="BaseResultMap" parameterType="java.util.List" resultType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_role 
+    where ROLE_CODE in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+        #{item}
+    </foreach>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_role
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByUserCode" parameterType="java.lang.String" >
+    delete from user_role
+    where USER_CODE = #{userCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hollysys.hiadsp.common.model.user.UserRole" >
+    insert into user_role (CODE, USER_CODE, ROLE_CODE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into user_role (CODE, USER_CODE, ROLE_CODE
+      )
+    values 
+    <foreach collection="list" index="index" item="item" separator=",">
+        (#{item.code,jdbcType=VARCHAR}, #{item.userCode,jdbcType=VARCHAR}, #{item.roleCode,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.hollysys.hiadsp.common.model.user.UserRole" >
+    insert into user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="userCode != null" >
+        USER_CODE,
+      </if>
+      <if test="roleCode != null" >
+        ROLE_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null" >
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hollysys.hiadsp.common.model.user.UserRole" >
+    update user_role
+    <set >
+      <if test="userCode != null" >
+        USER_CODE = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null" >
+        ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hollysys.hiadsp.common.model.user.UserRole" >
+    update user_role
+    set USER_CODE = #{userCode,jdbcType=VARCHAR},
+      ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

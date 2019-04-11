@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hollysys.hiadsp.uaa.mapper.user.UserOrgMapper" >
+  <resultMap id="BaseResultMap" type="com.hollysys.hiadsp.common.model.user.UserOrg" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, USER_CODE, ORG_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_org_relation
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_org_relation
+    where  USER_CODE= #{userCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="java.lang.String" resultType="java.util.List">
+    select 
+    <include refid="Base_Column_List" />
+    from user_org_relation
+    where  ORG_CODE= #{orgCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrgCodeList" resultMap="BaseResultMap" parameterType="java.util.List" resultType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_org_relation
+    where ORG_CODE in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+        #{item}
+    </foreach>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_org_relation
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByUserCode" parameterType="java.lang.String" >
+    delete from user_org_relation
+    where USER_CODE = #{userCode,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByOrgCode" parameterType="java.lang.String" >
+    delete from user_org_relation
+    where ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hollysys.hiadsp.common.model.user.UserOrg" >
+    insert into user_org_relation (CODE, USER_CODE, ORG_CODE)
+    values (#{code,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hollysys.hiadsp.common.model.user.UserOrg" >
+    insert into user_org_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="userCode != null" >
+        USER_CODE,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hollysys.hiadsp.common.model.user.UserOrg" >
+    update user_org_relation
+    <set >
+      <if test="userCode != null" >
+        USER_CODE = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hollysys.hiadsp.common.model.user.UserOrg" >
+    update user_org_relation
+    set USER_CODE = #{userCode,jdbcType=VARCHAR},
+      ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

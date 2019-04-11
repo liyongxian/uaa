@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+      profile: dev
+      label: master
+      uri: http://ms-config-server-srv.hiacloud-Infrastructure:8001/
+  application:
+    name: ms-uaa
