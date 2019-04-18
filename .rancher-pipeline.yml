@@ -2,7 +2,7 @@ stages:
 - name: compile
   steps:
   - runScriptConfig:
-      image: java:8
+      image: maven:3-jdk-7
       shellScript: mvn clean install
 - name: build
   steps:
