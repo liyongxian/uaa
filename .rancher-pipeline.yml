@@ -11,28 +11,5 @@ stages:
       buildContext: .
       tag: registry.cn-beijing.aliyuncs.com/hiacloud/uaa:${CICD_GIT_TAG}
       registry: 127.0.0.1:34777
-- name: chart-tml
-  steps:
-  - publishCatalogConfig:
-      path: ./chart
-      catalogTemplate: uaa
-      version: 1.0.0
-      gitUrl: https://github.com/liyongxian/chart.git
-      gitBranch: master
-      gitAuthor: hollysys
-      gitEmail: gostboy@163.com
-    env:
-      WEB_URI: http://webserver-srv.public.svc.cluster.local
-    envFrom:
-    - sourceName: pipeline-uaa
-      sourceKey: USERNAME
-      targetKey: USERNAME
-    - sourceName: pipeline-uaa
-      sourceKey: PASSWORD
-      targetKey: PASSWORD
-- name: deploy-yaml
-  steps:
-  - applyYamlConfig:
-      path: ./deployment.yaml
 timeout: 60
 notification: {}
