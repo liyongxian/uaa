@@ -85,8 +85,8 @@ public interface Constant {
     /**
      * 阿里云
      */
-    public static final String ACCESS_ID = "tRRYbgu096Uqy1yR";
-    public static final String ACCESS_KEY = "fkFVYW7gsD8NA36QqiE4wG53Y3k3iX";
+    public static final String ACCESS_ID = "aaa";
+    public static final String ACCESS_KEY = "bbbbb";
 //    public static final String OSS_ENDPOINT = "http://oss.aliyuncs.com/";
 //    public static final String DEFAULT_BUCKETNAME = "changedig-crawler";
     public static final int IMG_MAX_WIDTH = 1080;//原图最大宽度
