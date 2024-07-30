@@ -19,7 +19,7 @@
 		<springfox.version>2.5.0</springfox.version>
 		<wro4j.version>1.8.0</wro4j.version>
 		<angularjs.version>1.4.9</angularjs.version>
-		<bootstrap.version>3.3.7-1</bootstrap.version>
+		<bootstrap.version>3.4.0</bootstrap.version>
 		<jquery.version>2.2.4</jquery.version>
 		<jasmine.version>2.0.0</jasmine.version>
 		<!-- <docker.image.prefix>192.168.66.165:5000</docker.image.prefix> -->
